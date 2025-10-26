@@ -47,7 +47,7 @@ It is recommended to use a **virtual environment** to manage dependencies.
 
 ```bash
 python3 -m venv beam_env
-source beam_env/bin/activate  # On Windows use `beam_env\Scriptsctivate`
+source beam_env/bin/activate  # On Windows use `beam_env\Script\activate`
 ```
 
 ### **Install Dependencies**
@@ -96,7 +96,7 @@ This project relies on the following dependencies:
 Install the required dependencies with:
 
 ```bash
-pip install apache-beam[interactive] pytest google-cloud-storage
+pip install apache-beam[gcp] pytest
 ```
 
 ---
@@ -126,22 +126,11 @@ pytest -q  # Runs the tests in quiet mode
 To run the pipeline locally, use the **DirectRunner**, which executes the pipeline on your local machine.
 
 ```bash
-python3 -m beamapp.main --runner DirectRunner --output output/results.jsonl.gz
+python3 -m beamapp.main --runner DirectRunner
 ```
 
 This command will process the data from the input CSV, apply the transformations, and write the results to the **`output/results.jsonl.gz`** file.
 
-### **Run the Pipeline on Google Cloud Dataflow (Optional)**
-
-If you'd like to run the pipeline on **Google Cloud Dataflow**, use the **DataflowRunner**.
-
-```bash
-python3 -m beamapp.main --runner DataflowRunner     --project <YOUR_PROJECT_ID>     --staging_location gs://<YOUR_BUCKET>/staging/     --temp_location gs://<YOUR_BUCKET>/temp/     --region <YOUR_REGION>     --output gs://<YOUR_BUCKET>/results.jsonl.gz
-```
-
-Replace `<YOUR_PROJECT_ID>` and `<YOUR_BUCKET>` with your Google Cloud project and storage bucket names.
-
----
 
 ## **License**
 
