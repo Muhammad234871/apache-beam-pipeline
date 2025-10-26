@@ -1,0 +1,2 @@
+apache-beam[gcp]==2.68.0
+pytest==8.4.2

@@ -1,0 +1,31 @@
+# Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+beam_env/
+
+# IDE files
+.vscode/
+.idea/
+
+# Test files
+.pytest_cache/
+
+# Output data
+output/
+result.json1.gz
+
+# Python build files
+beamapp.egg-info/
+
+# Configuration files
+.env
+
+# Log files
+*.log
+
+# Miscellaneous files
+*.tar.gz
+*.zip
