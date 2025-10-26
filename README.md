@@ -28,7 +28,7 @@ This project processes transaction data using **Apache Beam**, a unified model f
 
 ### **Prerequisites**
 
-1. **Apache Beam**: This project uses the Apache Beam SDK for Python. You will need to install it first.
+1. **Apache Beam**: This project uses the Apache Beam SDK for Python. You will need to install it first to Run this project.
 2. **Python 3.7+**: Ensure that Python 3.7 or higher is installed.
 3. **Google Cloud SDK**: If you're working with Google Cloud Storage (GCS), you’ll need to authenticate using **Application Default Credentials**.
 
