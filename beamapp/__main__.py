@@ -1,6 +1,6 @@
 
 import logging
-from .main import run
+from .utils.main import run
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)

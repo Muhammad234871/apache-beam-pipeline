@@ -4,7 +4,7 @@ from apache_beam.testing.test_pipeline import TestPipeline
 from apache_beam.testing.util import assert_that, equal_to
 
 # import the ProcessTransactions composite transform
-from beamapp.pardos.process_transactions import ProcessTransactions
+from beamapp.transforms.process_transactions import ProcessTransactions
 
 
 def test_process_transactions():
