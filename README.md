@@ -124,7 +124,7 @@ pytest -q  # Runs the tests in quiet mode
 To run the pipeline locally, use the **DirectRunner**, which executes the pipeline on your local machine.
 
 ```bash
-python3 -m beamapp.main --runner DirectRunner
+python3 -m beamapp --runner DirectRunner
 ```
 
 This command will process the data from the input CSV, apply the transformations, and write the results to the **`output/results.jsonl.gz`** file.
