@@ -36,7 +36,7 @@ This project processes transaction data using **Apache Beam**, a unified model f
 Clone the repository to your local machine:
 
 ```bash
-git https://github.com/Muhammad234871/apache-beam-pipeline.git
+git clone https://github.com/Muhammad234871/apache-beam-pipeline.git
 cd apache-beam-pipeline
 ```
 
