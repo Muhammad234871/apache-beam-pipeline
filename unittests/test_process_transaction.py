@@ -25,6 +25,7 @@ def input_lines():
         "2018-02-27 16:04:11 UTC,walletM,walletN,not_a_number",
     ]
 
+# Expected output after processing
 def expected_output():
     return [
         json.dumps({"date": "2010-01-01", "total_transaction_amount": 25.00}),

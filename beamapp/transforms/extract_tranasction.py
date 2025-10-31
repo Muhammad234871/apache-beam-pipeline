@@ -5,6 +5,7 @@ class ExtractTransaction(beam.DoFn):
     def process(self, element):
         """Filters out transactions with a value less than 20. && Date greater than 2010"""
         
+        # Skip None elements
         if not element or not isinstance(element, dict):
              # Debugging line
             return # Skip None elements
