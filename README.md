@@ -137,7 +137,7 @@ This command will process the data from the input CSV, apply the transformations
 Once the pipeline has processed the data and output it as JSON Lines (**`.jsonl.gz`**), you can view the results by decompressing the file. Use the following command to decompress the **`results.jsonl.gz`** file and view its contents:
 
 ```bash
-gzip -cd output/results.jsonl.gz
+gzip -cd output/results.json1.gz
 ```
 
 This will print the decompressed JSON lines to the terminal.

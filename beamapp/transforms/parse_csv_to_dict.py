@@ -4,27 +4,19 @@ from datetime import datetime
 import csv
 from io import StringIO
 
-
-
-
 class ParseCsvToDict(beam.DoFn):
 
     # Improved CSV parsing function using csv.DictReader to make it dynamic
     def process(self, element):
         """Parses a CSV line into a dictionary with proper data types."""
         if not element:
-            return  # Skip empty lines
-        
-        row = self.parse_csv_line(element)
-        if row is None:
-            return  # Skip rows that failed to parse
-        
-        yield row
+            pass  # Skip empty lines
+        else:
+            row = self.parse_csv_line(element)
+            yield row
         
     def parse_csv_line(self, element):
         """Helper function to parse a CSV line into a dictionary."""
-        f = StringIO(element)
-        reader = csv.DictReader(f, fieldnames=['date', 'origin', 'destination', 'transaction_amount'])
         
          # Convert transaction_amount to float and changing date string to YYYY-MM-DD date object
         try:
@@ -34,18 +26,18 @@ class ParseCsvToDict(beam.DoFn):
             
             if not row['date'] or not row['transaction_amount']:
                 logging.warning(f"Skipping row due to missing date or transaction_amount: {element}")
-                return  # Skip rows with missing essential fields
+                return  None# Skip rows with missing essential fields
             
             # Convert transaction_amount to float
             row['transaction_amount'] = self.float_convert(row['transaction_amount'])
             if row['transaction_amount'] is None:
-                return  # Skip rows with invalid transaction_amount
+                return  None# Skip rows with invalid transaction_amount
             
             
             #Convert date string to date object
             row['date'] = self.date_convert(row['date'])
             if row['date'] is None:
-                return  # Skip rows with invalid date format
+                return None # Skip rows with invalid date format
             
             
             # Successfully parsed row, yield it

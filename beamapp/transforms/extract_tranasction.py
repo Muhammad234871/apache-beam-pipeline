@@ -10,6 +10,7 @@ class ExtractTransaction(beam.DoFn):
             return # Skip None elements
 
         try:
+            # Convert date string to datetime object for comparison
             if 'transaction_amount' in element and 'date' in element:
                 transaction_amount = float(element['transaction_amount'])
                 date = element['date']         
