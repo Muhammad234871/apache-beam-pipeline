@@ -145,12 +145,6 @@ This will print the decompressed JSON lines to the terminal.
 ---
 
 
-## **License**
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
 ### **Additional Information**:
 - **Logging**: Logs are generated throughout the pipeline for debugging and monitoring purposes.
 - **Performance**: The pipeline supports scaling with **Google Cloud Dataflow** for larger datasets.
