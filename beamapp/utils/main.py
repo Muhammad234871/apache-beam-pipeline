@@ -61,7 +61,7 @@ def run(argv=None):
             # Process the pipeline
             (
                 p
-                | "Create Input" >> beam.io.ReadFromText(input_file, skip_header_lines=1, coder=beam.coders.StrUtf8Coder())  # Reading data from GCS
+                | "Create Input" >> beam.io.ReadFromText(input_file, coder=beam.coders.StrUtf8Coder())  # Reading data from GCS
                 | "Process Transactions" >> ProcessTransactions()  # Using the composite transform
                 | "Write Gzip Output" >> beam.io.WriteToText(
                     output_prefix,

@@ -6,50 +6,64 @@ from io import StringIO
 
 class ParseCsvToDict(beam.DoFn):
 
+    def __init__(self): #implemented after interview
+        self.header = None   # safe for Beam workers
+        
+        
     # Improved CSV parsing function using csv.DictReader to make it dynamic
     def process(self, element):
         """Parses a CSV line into a dictionary with proper data types."""
-        if not element:
-            pass  # Skip empty lines
-        else:
-            row = self.parse_csv_line(element)
-            yield row
+        line = element.strip()
+        if not line:
+            return
+        
+        # Detect and store header dynamically
+        if self.header is None:
+            self.header = next(csv.reader([line]))
+            return  # do not emit the header row
+        try:
+            
+            # Parse data row using stored header
+            reader = csv.DictReader([line], fieldnames=self.header)
+            row = next(reader)
+        except Exception(csv.Error, StopIteration) as e:
+            logging.error(f"Error parsing CSV line: {line}, Error: {e}")
+            return
+
+        # Clean + convert data
+        parsed = self.clear_row(row)
+        if parsed:
+            yield parsed
     
     # Helper function to parse a CSV line into a dictionary
-    def parse_csv_line(self, element):
+    def clear_row(self, row_line):
         """Helper function to parse a CSV line into a dictionary."""
         
          # Convert transaction_amount to float and changing date string to YYYY-MM-DD date object
         try:
-            f = StringIO(element)
-            reader = csv.DictReader(f, fieldnames=['date', 'origin', 'destination', 'transaction_amount'])
-            row = next(reader)
-            
-            # Validate essential fields Date and transaction_amount are present
-            if not row['date'] or not row['transaction_amount']:
-                logging.warning(f"Skipping row due to missing date or transaction_amount: {element}")
-                return  None# Skip rows with missing essential fields
-            
-            # Convert transaction_amount to float
-            amount = self.float_convert(row['transaction_amount'])
-            if amount is None:
-                return  None# Skip rows with invalid transaction_amount
             
             
-            #Convert date string to date object
-            date_row = self.date_convert(row['date'])
-            if date_row is None:
-                return None # Skip rows with invalid date format
+            # Convert timestamp
+            ts = self.date_convert(row_line["timestamp"])
+            if ts is None:
+                return None
+
+            # Convert amount
+            amt = self.float_convert(row_line["transaction_amount"])
+            if amt is None:
+                return None
             
             
-            # Successfully parsed row, yield it
-            logging.debug(f"Parsed row: {row}")  # Debugging line (optional, for development)
-            row['transaction_amount'] = amount
-            row['date'] = date_row
-            return row
             
-        except (KeyError, TypeError, ValueError) as e:
-            logging.error(f"Error parsing line: {element}, Error: {e}")
+            return {
+                "timestamp": ts,
+                "origin": row_line["origin"],
+                "destination": row_line["destination"],
+                "transaction_amount": amt,
+            }
+            
+        except KeyError as e:
+            logging.error(f"Missing field {e} in row: {row_line}")
             return None
         
     # Convert transaction_amount to float 

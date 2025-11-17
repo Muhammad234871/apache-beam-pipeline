@@ -7,16 +7,18 @@ class ExtractTransaction(beam.DoFn):
         
         # Skip None elements
         if not element or not isinstance(element, dict):
-             # Debugging line
+            logging.debug("Received None or invalid element")
+
             return # Skip None elements
 
         try:
             # Convert date string to datetime object for comparison
-            if 'transaction_amount' in element and 'date' in element:
+            if 'transaction_amount' in element and 'timestamp' in element:
                 transaction_amount = float(element['transaction_amount'])
-                date = element['date']         
+                date = element['timestamp']         
                 if transaction_amount > 20 and int(date.year) >= 2010:
-                    element['date'] = date.isoformat()  # Convert date back to string for output
+                    element['timestamp'] = date.isoformat()  # Convert date back to string for output
+                    
                     yield element
         except (KeyError, TypeError, ValueError) as e:
             logging.error(f"Error processing element: {element}, Error: {e}")
